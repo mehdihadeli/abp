@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using Volo.Abp;
 using Volo.Abp.Account.Web;
@@ -16,6 +17,7 @@ using Volo.Abp.EntityFrameworkCore.SqlServer;
 using Volo.Abp.EventBus.RabbitMq;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.Identity.Settings;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
@@ -71,6 +73,13 @@ namespace AuthServer.Host
                 options.ApplicationName = "AuthServer";
             });
 
+            context.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Identity Service API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
+                options.CustomSchemaIds(type => type.FullName);
+            });
+
             //TODO: ConnectionMultiplexer.Connect call has problem since redis may not be ready when this service has started!
             var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
             context.Services.AddDataProtection()
@@ -98,6 +107,11 @@ namespace AuthServer.Host
                         .GetRequiredService<IDataSeeder>()
                         .SeedAsync();
                 }
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Identity Service API");
             });
         }
     }

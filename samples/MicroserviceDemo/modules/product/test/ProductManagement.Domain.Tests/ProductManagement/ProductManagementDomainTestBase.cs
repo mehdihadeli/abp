@@ -24,7 +24,7 @@ namespace ProductManagement
                 {
                     action();
 
-                    uow.Complete();
+                    uow.CompleteAsync().GetAwaiter().GetResult();
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace ProductManagement
                 using (var uow = uowManager.Begin(options))
                 {
                     var result = func();
-                    uow.Complete();
+                    uow.CompleteAsync().GetAwaiter().GetResult();
                     return result;
                 }
             }
