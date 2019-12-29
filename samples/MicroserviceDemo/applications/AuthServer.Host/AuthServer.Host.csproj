@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <!-- <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects> -->
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <PreserveCompilationContext>true</PreserveCompilationContext>
