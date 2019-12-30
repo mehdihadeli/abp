@@ -104,40 +104,40 @@ namespace AuthServer.Host
                 "address"
             };
 
-            await CreateClientAsync(
+           await CreateClientAsync(
                 "console-client-demo",
                 new[] { "BloggingService", "IdentityService", "InternalGateway", "ProductService" },
-                new[] { "client_credentials", "password" },
-                commonSecret,
-                permissions: new[] { IdentityPermissions.Users.Default, "ProductManagement.Product" }
-            );
-            
+               new[] { "client_credentials", "password" },
+               commonSecret,
+               permissions: new[] { IdentityPermissions.Users.Default, "ProductManagement.Product" }
+           );
+
             await CreateClientAsync(
                 "backend-admin-app-client",
-                commonScopes.Union(new[] { "BackendAdminAppGateway", "IdentityService", "ProductService" }),
-                new[] { "hybrid" },
+                commonScopes.Union(new[] {"BackendAdminAppGateway", "IdentityService", "ProductService"}),
+                new[] {"hybrid"},
                 commonSecret,
-                permissions: new[] { IdentityPermissions.Users.Default, "ProductManagement.Product" },
+                permissions: new[] {IdentityPermissions.Users.Default, "ProductManagement.Product"},
                 redirectUri: "http://localhost:51954/signin-oidc",
                 postLogoutRedirectUri: "http://localhost:51954/signout-callback-oidc"
             );
 
             await CreateClientAsync(
                 "public-website-client",
-                commonScopes.Union(new[] { "PublicWebSiteGateway", "BloggingService", "ProductService" }),
-                new[] { "hybrid" },
+                commonScopes.Union(new[] {"PublicWebSiteGateway", "BloggingService", "ProductService"}),
+                new[] {"hybrid"},
                 commonSecret,
                 redirectUri: "http://localhost:53435/signin-oidc",
                 postLogoutRedirectUri: "http://localhost:53435/signout-callback-oidc"
             );
 
-            await CreateClientAsync(
-                "blogging-service-client",
-                new[] { "InternalGateway", "IdentityService" },
-                new[] { "client_credentials" },
-                commonSecret,
-                permissions: new[] { IdentityPermissions.UserLookup.Default }
-            );
+//            await CreateClientAsync(
+//                "blogging-service-client",
+//                new[] { "InternalGateway", "IdentityService" },
+//                new[] { "client_credentials" },
+//                commonSecret,
+//                permissions: new[] { IdentityPermissions.UserLookup.Default }
+//            );
         }
 
         private async Task<Client> CreateClientAsync(

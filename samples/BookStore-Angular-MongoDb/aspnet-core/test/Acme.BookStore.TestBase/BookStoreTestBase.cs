@@ -32,7 +32,7 @@ namespace Acme.BookStore
                 {
                     action();
 
-                    uow.Complete();
+                    uow.CompleteAsync().GetAwaiter().GetResult();
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace Acme.BookStore
                 using (var uow = uowManager.Begin(options))
                 {
                     var result = func();
-                    uow.Complete();
+                    uow.CompleteAsync().GetAwaiter().GetResult();
                     return result;
                 }
             }
