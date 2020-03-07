@@ -38,16 +38,24 @@
           "text": "Application Development",
           "items": [
             {
-              "text": "With ASP.NET Core MVC UI",
-              "path": "Tutorials/AspNetCore-Mvc/Part-I.md"
+              "text": "Part-1: Creating a new solution and listing items",
+              "path": "Tutorials/Part-1.md"
             },
             {
-              "text": "With Angular UI",
-              "path": "Tutorials/Angular/Part-I.md"
+              "text": "Part-2: CRUD operations",
+              "path": "Tutorials/Part-2.md"
+            },
+            {
+              "text": "Part-3: Integration tests",
+              "path": "Tutorials/Part-3.md"
             }
           ]
         }
       ]
+    },
+    {
+      "text": "ASP.NET Boilerplate Migration Guide",
+      "path": "AspNet-Boilerplate-Migration-Guide.md"
     },
     {
       "text": "CLI",
@@ -59,6 +67,10 @@
         {
           "text": "Configuration",
           "path": "Configuration.md"
+        },
+        {
+          "text": "Options",
+          "path": "Options.md"
         },
         {
           "text": "Dependency Injection",
@@ -83,7 +95,14 @@
           "path": "Exception-Handling.md"
         },
         {
-          "text": "Validation"
+          "text": "Validation",
+          "path": "Validation.md",
+          "items": [
+            {
+              "text": "FluentValidation Integration",
+              "path": "FluentValidation.md"
+            }
+          ]
         },
         {
           "text": "Authorization",
@@ -94,11 +113,20 @@
           "path": "Caching.md"
         },
         {
-          "text": "Auditing"
+          "text": "Logging",
+          "path": "Logging.md"
+        },
+        {
+          "text": "Audit Logging",
+          "path": "Audit-Logging.md"
         },
         {
           "text": "Settings",
           "path": "Settings.md"
+        },
+        {
+          "text": "Data Filtering",
+          "path": "Data-Filtering.md"
         }
       ]
     },
@@ -217,7 +245,7 @@
       "items": [
         {
           "text": "API",
-          "items": [            
+          "items": [
             {
               "text": "Auto API Controllers",
               "path": "AspNetCore/Auto-API-Controllers.md"
@@ -257,25 +285,52 @@
     },
     {
       "text": "Data Access",
-	    "path": "Data-Access.md",
+      "path": "Data-Access.md",
       "items": [
         {
-          "text": "Entity Framework Core Integration",
-          "path": "Entity-Framework-Core.md",
-          "items": [            
+          "text": "Connection Strings",
+          "path": "Connection-Strings.md"
+        },
+        {
+          "text": "Database Providers",
+          "items": [
             {
-              "text": "PostgreSQL Integration",
-              "path": "EntityFrameworkCore-PostgreSQL-Integration.md"
+              "text": "Entity Framework Core",
+              "path": "Entity-Framework-Core.md",
+              "items": [
+                {
+                  "text": "Database Migrations",
+                  "path": "Entity-Framework-Core-Migrations.md"
+                },
+                {
+                  "text": "Switch DBMS",
+                  "path": "Entity-Framework-Core-Other-DBMS.md",
+                  "items": [
+                    {
+                      "text": "To MySQL",
+                      "path": "Entity-Framework-Core-MySQL.md"
+                    },
+                    {
+                      "text": "To PostgreSQL",
+                      "path": "Entity-Framework-Core-PostgreSQL.md"
+                    },
+                    {
+                      "text": "To SQLite",
+                      "path": "Entity-Framework-Core-SQLite.md"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "text": "MongoDB",
+              "path": "MongoDB.md"
+            },
+            {
+              "text": "Dapper",
+              "path": "Dapper.md"
             }
           ]
-        },
-        {
-          "text": "MongoDB Integration",
-          "path": "MongoDB.md"
-        },
-        {
-          "text": "Dapper Integration",
-          "path": "Dapper.md"
         }
       ]
     },
@@ -293,6 +348,20 @@
             {
               "text": "RabbitMQ Integration",
               "path": "Background-Jobs-RabbitMq.md"
+            },
+            {
+              "text": "Quartz Integration",
+              "path": "Background-Jobs-Quartz.md"
+            }
+          ]
+        },
+        {
+          "text": "Background Workers",
+          "path": "Background-Workers.md",
+          "items": [
+            {
+              "text": "Quartz Integration",
+              "path": "Background-Workers-Quartz.md"
             }
           ]
         }

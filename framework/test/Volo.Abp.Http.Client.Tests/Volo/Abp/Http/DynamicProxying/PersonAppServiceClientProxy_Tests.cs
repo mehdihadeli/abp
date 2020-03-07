@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using NSubstitute.Extensions;
 using Shouldly;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
@@ -9,6 +10,7 @@ using Volo.Abp.Http.Client;
 using Volo.Abp.TestApp.Application;
 using Volo.Abp.TestApp.Application.Dto;
 using Volo.Abp.TestApp.Domain;
+using Volo.Abp.Validation;
 using Xunit;
 
 namespace Volo.Abp.Http.DynamicProxying
@@ -38,7 +40,8 @@ namespace Volo.Abp.Http.DynamicProxying
         [Fact]
         public async Task GetList()
         {
-            var people = await _peopleAppService.GetListAsync(new PagedAndSortedResultRequestDto());
+            var people = await _peopleAppService.GetListAsync(new PagedAndSortedResultRequestDto())
+                ;
             people.TotalCount.ShouldBeGreaterThan(0);
             people.Items.Count.ShouldBe((int) people.TotalCount);
         }
@@ -74,7 +77,20 @@ namespace Volo.Abp.Http.DynamicProxying
             personInDb.ShouldNotBeNull();
             personInDb.Id.ShouldBe(person.Id);
         }
-        
+
+        [Fact]
+        public async Task Create_Validate_Exception()
+        {
+            await Assert.ThrowsAsync<AbpValidationException>(async () =>
+            {
+                var person = await _peopleAppService.CreateAsync(new PersonDto
+                    {
+                        Age = 42
+                    }
+                );
+            });
+        }
+
         [Fact]
         public async Task Update()
         {

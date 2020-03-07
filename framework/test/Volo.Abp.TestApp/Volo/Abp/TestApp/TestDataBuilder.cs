@@ -41,12 +41,12 @@ namespace Volo.Abp.TestApp
         {
             var istanbul = new City(IstanbulCityId, "Istanbul");
             istanbul.Districts.Add(new District(istanbul.Id, "Bakirkoy", 1283999));
-            istanbul.Districts.Add(new District(istanbul.Id, "Mecidiyeköy", 2222321));
+            istanbul.Districts.Add(new District(istanbul.Id, "Mecidiyekï¿½y", 2222321));
             istanbul.Districts.Add(new District(istanbul.Id, "Uskudar", 726172));
 
             await _cityRepository.InsertAsync(new City(Guid.NewGuid(), "Tokyo"));
             await _cityRepository.InsertAsync(new City(Guid.NewGuid(), "Madrid"));
-            await _cityRepository.InsertAsync(new City(LondonCityId, "London") {ExtraProperties = { { "Population", 10_470_000 } } });
+            await _cityRepository.InsertAsync(new City(LondonCityId, "London") { ExtraProperties = { { "Population", 10_470_000 } } });
             await _cityRepository.InsertAsync(istanbul);
             await _cityRepository.InsertAsync(new City(Guid.NewGuid(), "Paris"));
             await _cityRepository.InsertAsync(new City(Guid.NewGuid(), "Washington"));

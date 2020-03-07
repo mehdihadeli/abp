@@ -51,7 +51,7 @@ export class UsersComponent implements OnInit {
 
   providerKey: string;
 
-  pageQuery: ABP.PageQueryParams = {};
+  pageQuery: ABP.PageQueryParams = { maxResultCount: 10 };
 
   isModalVisible: boolean;
 
@@ -68,6 +68,10 @@ export class UsersComponent implements OnInit {
   requiredPasswordLength = 1;
 
   trackByFn: TrackByFunction<AbstractControl> = (index, item) => Object.keys(item)[0] || index;
+
+  onVisiblePermissionChange = event => {
+    this.visiblePermissions = event;
+  };
 
   get roleGroups(): FormGroup[] {
     return snq(() => (this.form.get('roleNames') as FormArray).controls as FormGroup[], []);
@@ -98,7 +102,9 @@ export class UsersComponent implements OnInit {
       this.passwordRulesArr.push('capital');
     }
 
-    if (+(passwordRules['Abp.Identity.Password.RequiredUniqueChars'] || 0) > 0) {
+    if (
+      (passwordRules['Abp.Identity.Password.RequireNonAlphanumeric'] || '').toLowerCase() === 'true'
+    ) {
       this.passwordRulesArr.push('special');
     }
 
@@ -107,13 +113,13 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  onSearch(value) {
+  onSearch(value: string) {
     this.pageQuery.filter = value;
     this.get();
   }
 
   buildForm() {
-    this.store.dispatch(new GetRoles()).subscribe(() => {
+    this.store.dispatch(new GetRoles({ maxResultCount: 1000, skipCount: 0 })).subscribe(() => {
       this.roles = this.store.selectSnapshot(IdentityState.getRoles);
       this.form = this.fb.group({
         userName: [this.selected.userName || '', [Validators.required, Validators.maxLength(256)]],
@@ -130,7 +136,9 @@ export class UsersComponent implements OnInit {
           this.roles.map(role =>
             this.fb.group({
               [role.name]: [
-                !!snq(() => this.selectedUserRoles.find(userRole => userRole.id === role.id)),
+                this.selected.id
+                  ? !!snq(() => this.selectedUserRoles.find(userRole => userRole.id === role.id))
+                  : role.isDefault,
               ],
             }),
           ),
@@ -140,7 +148,7 @@ export class UsersComponent implements OnInit {
       const passwordValidators = [
         validatePassword(this.passwordRulesArr),
         Validators.minLength(this.requiredPasswordLength),
-        Validators.maxLength(32),
+        Validators.maxLength(128),
       ];
 
       this.form.addControl('password', new FormControl('', [...passwordValidators]));
@@ -173,7 +181,7 @@ export class UsersComponent implements OnInit {
       )
       .subscribe((state: Identity.State) => {
         this.selected = state.selectedUser;
-        this.selectedUserRoles = state.selectedUserRoles;
+        this.selectedUserRoles = state.selectedUserRoles || [];
         this.openModal();
       });
   }
@@ -222,9 +230,8 @@ export class UsersComponent implements OnInit {
       });
   }
 
-  onPageChange(data) {
-    this.pageQuery.skipCount = data.first;
-    this.pageQuery.maxResultCount = data.rows;
+  onPageChange(page: number) {
+    this.pageQuery.skipCount = (page - 1) * this.pageQuery.maxResultCount;
 
     this.get();
   }
@@ -235,5 +242,12 @@ export class UsersComponent implements OnInit {
       .dispatch(new GetUsers(this.pageQuery))
       .pipe(finalize(() => (this.loading = false)))
       .subscribe();
+  }
+
+  openPermissionsModal(providerKey: string) {
+    this.providerKey = providerKey;
+    setTimeout(() => {
+      this.visiblePermissions = true;
+    }, 0);
   }
 }

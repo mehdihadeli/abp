@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
+using Volo.Abp.Testing;
 using Xunit;
 
 namespace Volo.Abp.Uow
@@ -23,7 +24,12 @@ namespace Volo.Abp.Uow
 
             using (var uow = _unitOfWorkManager.Begin())
             {
-                uow.OnCompleted(async () => completed = true);
+                uow.OnCompleted(() =>
+                {
+                    completed = true; 
+                    return Task.CompletedTask;
+                });
+
                 uow.Disposed += (sender, args) => disposed = true;
 
                 await uow.CompleteAsync();

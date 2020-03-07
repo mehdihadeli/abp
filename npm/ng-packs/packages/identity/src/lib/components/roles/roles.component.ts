@@ -36,7 +36,7 @@ export class RolesComponent implements OnInit {
 
   providerKey: string;
 
-  pageQuery: ABP.PageQueryParams = {};
+  pageQuery: ABP.PageQueryParams = { maxResultCount: 10 };
 
   loading = false;
 
@@ -48,6 +48,10 @@ export class RolesComponent implements OnInit {
 
   @ViewChild('formRef', { static: false, read: ElementRef })
   formRef: ElementRef<HTMLFormElement>;
+
+  onVisiblePermissionChange = event => {
+    this.visiblePermissions = event;
+  };
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -119,9 +123,8 @@ export class RolesComponent implements OnInit {
       });
   }
 
-  onPageChange(data) {
-    this.pageQuery.skipCount = data.first;
-    this.pageQuery.maxResultCount = data.rows;
+  onPageChange(page: number) {
+    this.pageQuery.skipCount = (page - 1) * this.pageQuery.maxResultCount;
 
     this.get();
   }
@@ -138,5 +141,12 @@ export class RolesComponent implements OnInit {
     this.formRef.nativeElement.dispatchEvent(
       new Event('submit', { bubbles: true, cancelable: true }),
     );
+  }
+
+  openPermissionsModal(providerKey: string) {
+    this.providerKey = providerKey;
+    setTimeout(() => {
+      this.visiblePermissions = true;
+    }, 0);
   }
 }

@@ -19,7 +19,7 @@ namespace Volo.Abp.EntityFrameworkCore.TestApp.SecondContext
 
         public async Task BuildAsync()
         {
-            await _bookRepository.InsertAsync( 
+            await _bookRepository.InsertAsync(
                 new BookInSecondDbContext(
                     _guidGenerator.Create(),
                     "TestBook1"

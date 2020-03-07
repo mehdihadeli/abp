@@ -54,7 +54,7 @@ namespace Volo.Abp.Http.DynamicProxying
         [Fact]
         public async Task PostObjectWithBodyAsync()
         {
-            var result = await _controller.PostObjectWithBodyAsync(new Car{Year = 1976, Model = "Ford"});
+            var result = await _controller.PostObjectWithBodyAsync(new Car { Year = 1976, Model = "Ford" });
             result.Year.ShouldBe(1976);
             result.Model.ShouldBe("Ford");
         }
@@ -62,7 +62,7 @@ namespace Volo.Abp.Http.DynamicProxying
         [Fact]
         public async Task PostObjectWithQueryAsync()
         {
-            var result = await _controller.PostObjectWithQueryAsync(new Car{Year = 1976, Model = "Ford"});
+            var result = await _controller.PostObjectWithQueryAsync(new Car { Year = 1976, Model = "Ford" });
             result.Year.ShouldBe(1976);
             result.Model.ShouldBe("Ford");
         }
@@ -70,7 +70,7 @@ namespace Volo.Abp.Http.DynamicProxying
         [Fact]
         public async Task GetObjectWithUrlAsync()
         {
-            var result = await _controller.GetObjectWithUrlAsync(new Car{Year = 1976, Model = "Ford"});
+            var result = await _controller.GetObjectWithUrlAsync(new Car { Year = 1976, Model = "Ford" });
             result.Year.ShouldBe(1976);
             result.Model.ShouldBe("Ford");
         }
@@ -78,7 +78,7 @@ namespace Volo.Abp.Http.DynamicProxying
         [Fact]
         public async Task GetObjectandIdAsync()
         {
-            var result = await _controller.GetObjectandIdAsync(42, new Car{Year = 1976, Model = "Ford"});
+            var result = await _controller.GetObjectandIdAsync(42, new Car { Year = 1976, Model = "Ford" });
             result.Year.ShouldBe(42);
             result.Model.ShouldBe("Ford");
         }
@@ -86,7 +86,7 @@ namespace Volo.Abp.Http.DynamicProxying
         [Fact]
         public async Task GetObjectAndIdWithQueryAsync()
         {
-            var result = await _controller.GetObjectAndIdWithQueryAsync(42, new Car{Year = 1976, Model = "Ford"});
+            var result = await _controller.GetObjectAndIdWithQueryAsync(42, new Car { Year = 1976, Model = "Ford" });
             result.Year.ShouldBe(42);
             result.Model.ShouldBe("Ford");
         }

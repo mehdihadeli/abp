@@ -208,7 +208,7 @@ namespace Volo.Abp.Domain.Repositories.EntityFrameworkCore
         {
             return includeDetails
                 ? await WithDetails().FirstOrDefaultAsync(e => e.Id.Equals(id), GetCancellationToken(cancellationToken))
-                : await DbSet.FindAsync(new object[] { id }, GetCancellationToken(cancellationToken));
+                : await DbSet.FindAsync(new object[] {id}, GetCancellationToken(cancellationToken));
         }
 
         public virtual async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)

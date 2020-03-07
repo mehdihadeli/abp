@@ -67,7 +67,7 @@ namespace Volo.Abp.PermissionManagement.Application.Tests.Volo.Abp.PermissionMan
         {
             await _permissionGrantRepository.InsertAsync(
                 new PermissionGrant(
-                    Guid.NewGuid(), 
+                    Guid.NewGuid(),
                     "MyPermission1",
                     "Test",
                     "Test"

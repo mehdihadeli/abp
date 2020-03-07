@@ -9,6 +9,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Autofac;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Modularity;
+using Volo.Abp.Testing;
 using Xunit;
 
 namespace Volo.Abp.Validation
@@ -110,7 +111,7 @@ namespace Volo.Abp.Validation
         {
             await Assert.ThrowsAsync<AbpValidationException>(async () =>
                 await _myAppService.MyMethod4(new MyMethod4Input()) //ArrayItems is null!
-                );
+            );
         }
 
         [Fact]
@@ -157,7 +158,7 @@ namespace Volo.Abp.Validation
         {
             await _myAppService.MyMethodWithLimitedResult(new LimitedResultRequestDto
             {
-                MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount -1
+                MaxResultCount = LimitedResultRequestDto.MaxMaxResultCount - 1
             });
         }
 
@@ -177,16 +178,16 @@ namespace Volo.Abp.Validation
         public void Should_Validate_Emails()
         {
             //Valid
-            ValidationHandler.IsValidEmailAddress("john.doe@domain.com").ShouldBe(true);
-            ValidationHandler.IsValidEmailAddress("ip@1.2.3.123").ShouldBe(true);
-            ValidationHandler.IsValidEmailAddress("pharaoh@egyptian.museum").ShouldBe(true);
-            ValidationHandler.IsValidEmailAddress("john.doe+regexbuddy@gmail.com").ShouldBe(true);
-            ValidationHandler.IsValidEmailAddress("Mike.O'Dell@ireland.com").ShouldBe(true);
+            ValidationHelper.IsValidEmailAddress("john.doe@domain.com").ShouldBe(true);
+            ValidationHelper.IsValidEmailAddress("ip@1.2.3.123").ShouldBe(true);
+            ValidationHelper.IsValidEmailAddress("pharaoh@egyptian.museum").ShouldBe(true);
+            ValidationHelper.IsValidEmailAddress("john.doe+regexbuddy@gmail.com").ShouldBe(true);
+            ValidationHelper.IsValidEmailAddress("Mike.O'Dell@ireland.com").ShouldBe(true);
 
             //Invalid
-            ValidationHandler.IsValidEmailAddress("1024x768@60Hz").ShouldBe(false);
-            ValidationHandler.IsValidEmailAddress("not.a.valid.email").ShouldBe(false);
-            ValidationHandler.IsValidEmailAddress("john@aol...com").ShouldBe(false);
+            ValidationHelper.IsValidEmailAddress("1024x768@60Hz").ShouldBe(false);
+            ValidationHelper.IsValidEmailAddress("not.a.valid.email").ShouldBe(false);
+            ValidationHelper.IsValidEmailAddress("john@aol...com").ShouldBe(false);
         }
 
         [DependsOn(typeof(AbpAutofacModule))]

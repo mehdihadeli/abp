@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 using Volo.Abp.Modularity;
+using Volo.Abp.Testing;
 using Xunit;
 
 namespace Volo.Abp.DynamicProxy
@@ -40,9 +41,9 @@ namespace Volo.Abp.DynamicProxy
 
 		    var target = ServiceProvider.GetService<SimpleInterceptionTargetClass>();
 
-		    //Act
+            //Act
 
-		    await target.DoItAsync();
+            await target.DoItAsync();
 
 		    //Assert
 
